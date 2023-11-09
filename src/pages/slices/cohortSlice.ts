@@ -1,4 +1,9 @@
-import { createSlice, createAsyncThunk, PayloadAction, Reducer } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  PayloadAction,
+  Reducer,
+} from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
 
 export type DataType = {
@@ -23,10 +28,13 @@ export interface RootState {
 }
 
 // 비동기 액션 생성
-export const fetchData = createAsyncThunk('cohort/fetchData', async (_, thunkAPI) => {
-  const response = await axios.get('/api/data');
-  return response.data as DataType[];
-});
+export const fetchData = createAsyncThunk(
+  "cohort/fetchData",
+  async (_, thunkAPI) => {
+    const response = await axios.get("/api/data");
+    return response.data as DataType[];
+  }
+);
 
 export const cohortSlice = createSlice({
   name: "cohort",
@@ -38,10 +46,9 @@ export const cohortSlice = createSlice({
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
-    builder
-      .addCase(fetchData.fulfilled, (state, action) => {
-        state.data = action.payload;
-      })
+    builder.addCase(fetchData.fulfilled, (state, action) => {
+      state.data = action.payload;
+    });
   },
 });
 

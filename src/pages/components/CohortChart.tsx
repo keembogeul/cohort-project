@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { fetchData, setData } from "../slices/cohortSlice";
-import { useAppSelector, useAppDispatch } from '../store/hooks'
-
+import { fetchData } from "../slices/cohortSlice";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 
 export default function CohortChart() {
   const cohortData = useAppSelector((state) => state.cohort.data);
   const dispatch = useAppDispatch();
 
-
   const fetchDataFromAPI = async () => {
     try {
-      const response = await dispatch(fetchData());
-
-      console.log(response)
-
+      await dispatch(fetchData());
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -23,5 +24,5 @@ export default function CohortChart() {
     fetchDataFromAPI();
   }, [dispatch]);
 
-  return <></>
+  return <></>;
 }
