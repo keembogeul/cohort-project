@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "../store";
-import { RootState, fetchData, setData } from "../slices/cohortSlice";
-import { DataType } from '../store/type';
+import { fetchData, setData } from "../slices/cohortSlice";
+import { useAppSelector, useAppDispatch } from '../store/hooks'
+
 
 export default function CohortChart() {
-  const cohortData = useSelector((state: RootState) => state.cohort.data);
+  const cohortData = useAppSelector((state) => state.cohort.data);
   const dispatch = useAppDispatch();
 
 
   const fetchDataFromAPI = async () => {
     try {
-      await dispatch(fetchData());
+      const response = await dispatch(fetchData());
+
+      console.log(response)
 
     } catch (error) {
+      console.log(error)
     }
   };
 

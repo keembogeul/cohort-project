@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction, Reducer } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
 
 export type DataType = {
@@ -24,13 +24,8 @@ export interface RootState {
 
 // 비동기 액션 생성
 export const fetchData = createAsyncThunk('cohort/fetchData', async (_, thunkAPI) => {
-  try {
-    const response = await axios.get<DataType[]>('/api/data');
-    return response.data;
-  } catch (error) {
-    // 오류 처리 로직
-    return thunkAPI.rejectWithValue(error.response.data);
-  }
+  const response = await axios.get('/api/data');
+  return response.data as DataType[];
 });
 
 export const cohortSlice = createSlice({
@@ -47,9 +42,6 @@ export const cohortSlice = createSlice({
       .addCase(fetchData.fulfilled, (state, action) => {
         state.data = action.payload;
       })
-      .addCase(fetchData.rejected, (state, action) => {
-        state.error = action.payload;
-      });
   },
 });
 
