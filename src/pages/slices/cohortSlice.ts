@@ -7,9 +7,9 @@ import {
 import axios, { AxiosResponse } from "axios";
 
 export type DataType = {
-  standardDate?: string;
-  uid?: number;
-  region?: string;
+  standardDate: string;
+  uid: number;
+  region: string;
 };
 
 // 초기 상태
@@ -47,6 +47,7 @@ export const cohortSlice = createSlice({
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(fetchData.fulfilled, (state, action) => {
+      // console.log(action.payload)
       state.data = action.payload;
     });
   },
